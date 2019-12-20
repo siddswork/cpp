@@ -1,0 +1,76 @@
+The objective of this test is to read a supplied binary data file, search for a particular message type, do a trivial calculation and log the results to a human readable text file.
+
+You have to design and code a solution in C or C++.
+
+The solution should be run with two command line parameters.
+    program <input file> <output file>
+
+The solution should be simple and efficient in time and space. Do no more work than required.
+
+The solution should be created on Linux.
+
+You have 4 hours to complete the test and email back:
+    source code
+    executable file
+    the output file
+    a simple 1 line script that compiles the program
+
+You can send back as many versions of the solution as you like within the 4 hour period, but only the last one will be checked.
+
+
+
+
+The input file consists of a series of packets, <> are not included in the file !!.
+    <packet><packet><packet><packet>....
+
+
+A packet is defined as
+    <Packet Header><Packet Payload>
+
+
+A Packet Header is defined as
+    uint16      packet length
+    uint16      the number of update messages in the packet
+
+
+A packet payload is defined as a variable number of update messages which will be a mixture of Quotes and Trades
+
+A Quote is defined as
+    uint16      msg length
+    char        msg type            'Q'
+    char        symbol[5]
+    uint16      price level
+    uint16      price level size
+    int64       price level price
+    extra undefined bytes
+
+A Trade is defined as
+    uint16      msg length
+    char        msg type            'T'
+    char        symbol[5]
+    uint16      trade size
+    int64       trade price
+    extra undefined bytes
+
+
+The program should read the input file and for every trade message found, format text to be written to the output file with the following format.
+    <trade size * 100> <symbol> <trade price / 10000> <\n>
+
+The first 4 lines of the output file are shown below:
+17000 CAT @ 4.72
+70600 AA @ 6.45
+29300 BAC @ 3.22
+44800 CSCO @ 9.46
+
+
+
+Notes
+    The packet length field value includes itself
+    The message length field value includes itself
+    All numeric fields are in network byte order
+    The symbol field is ASCII, left justified, space filled to the right if the symbol is less than 5 bytes
+
+
+
+
+
